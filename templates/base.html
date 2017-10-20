@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+            <link href='https://fonts.googleapis.com/css?family=Bungee Shade' rel='stylesheet'>            
+        <title>{{title}}</title>
+        <style>
+                body {
+                    background: red;
+                }
+    
+                h1 {
+                    font-family: 'Bungee Shade';font-size: 22px;
+                    text-align: center;
+                    color: blueviolet;
+                    background: black;
+                    border: dashed;
+                }
+    
+                .container {
+                    display: flex;
+                    flex-direction: column;
+                    background: green;
+                    align-items: center;
+                    border: dashed;
+                }
+
+                .blogtext {
+                    width: 100%;
+                    height: 150px;
+                    padding: 12px 20px;
+                    box-sizing: border-box;
+                    border: 2px solid #ccc;
+                    border-radius: 4px;
+                    background-color: #f8f8f8;
+                    resize: none;
+                }
+
+                .titlebox {
+                    width: 100%;
+                    height: 15px;
+                    padding: 12px 20px;
+                    box-sizing: border-box;
+                    border: 2px solid #ccc;
+                    border-radius: 4px;
+                    background-color: #f8f8f8;
+                    resize: none;
+                }
+
+                .blogbox {
+                    border: dashed;
+                }
+
+    
+                .error { color: rgb(202, 0, 0);
+                    font-size: 10px; 
+                }
+    
+
+                .submit {
+                    padding: 5px 15px; 
+                    background: rgb(23, 23, 23); 
+                    border: 0 none;
+                    border-radius: 5px;
+                    font-size: 12px;
+                    font-weight: 500;
+                    color: white;
+                }
+    
+                input {
+                    background-color: rgb(255, 255, 255);
+                    font-weight: bold;
+                    text-align: left;
+                }
+
+            </style>
+    </head>
+<body>
+
+    {% block content %}
+    {% endblock %}
+
+</body>
+</html>
