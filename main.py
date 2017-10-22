@@ -13,11 +13,12 @@ class Blogs(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(30))
     blogtext = db.Column(db.String(500))
-
+    completed = db.Column(db.Boolean)
 
     def __init__(self, title, blogtext):
         self.title = title
         self.blogtext = blogtext
+        self.completed = False
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -30,8 +31,10 @@ def index():
         db.session.add(new_entry)
         db.session.commit()
 
-    tasks = Blogs.query.all()
-    return render_template('todos.html', title='Build a Blog', tasks=tasks)
+    tasks = Blogs.query.filter_by(completed=False).all()
+    completed_tasks = Blogs.query.filter_by(completed=True).all()
+    return render_template('todos.html', title='Build a Blog', 
+        tasks=tasks, completed_tasks=completed_tasks)
 
 
 @app.route('/delete-task', methods=['POST'])
@@ -39,7 +42,8 @@ def delete_blog():
 
     task_id = int(request.form['task-id'])
     task = Blogs.query.get(task_id)
-    db.session.delete(task)
+    task.completed = True
+    db.session.add(task)
     db.session.commit()
 
     return redirect('/')

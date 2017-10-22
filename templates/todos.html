@@ -1,52 +1,88 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class='container'>
-    <div class='tabs'>
-        <div class='button'>
-            <a href='/blog'>Main Blog Page</a>
+
+<!------------------HEADER------------------>  
+<div id='page' class='site'>
+    <header id='masthead' role='banner'>
+        <div class="site-branding">
+            <h1 id="site-title">Build-a-Blog</h1>
+            <h2 id="site-description">DATA + BASE + BLOG</h2>
         </div>
-        <div class='button'>
-            <a href='/add_post'>Add a Blog Entry</a>
-        </div> 
-    </div>
-    <div class='bannerbox'>
-    <h1>Build a Blog</h1>
-    </div>
-    <div class='blogbox'>
+        <nav id="site-navigation" role="navigation">
+
+                <ul id="menu-primary">
+                    <li id="Home" class="menu-item">
+                        <button> 
+                            <span>Main Page</span>
+                        </button>
+                    <li id="Posts" class="menu-item">
+                        <button> 
+                            <span>Blog Posts</span>
+                        </button>
+                </ul>
+                    <!----<div id='fillspace' class='menu-item'></div>---->
+	
+        </nav>
+    </header>
+
+    <div id='menu-image' class='menu-image'>
+        <img src='https://static.pexels.com/photos/51387/mount-everest-himalayas-nuptse-lhotse-51387.jpeg' 
+        class='image' /></div>
+
+    <!------------------BLOG ENTRY FIELD------------------>  
+    <div id='new-blog-field' class='container'>
+        <h2>CREATE A BLOG</h2>
         <form method='post'>
-            <label>
-                Blog Title:
-                <input type='text' class='titlebox' name='title' />
+            <label for='title' class='label'>TITLE:
+                <input type='text' id='titlebox' name='title' value='This is a font test.' />
             </label>
-            <br>
-            <p><label for='blogtext'>We'd love to hear about your day:</label></p>
-            <textarea id="blogtext" class="blogtext" name="blogtext"></textarea>
-            <br>
+            <label for='blogtext' class='label'>BODY:
+                <textarea id="blogtext" name="blogtext"></textarea>
+            </label>
             <input type='submit' class='submit' value='Add Blog' />
         </form>
     </div>
-</div>
-
     <hr />
 
-    {% if tasks|length == 0 %}
-    <p>No tasks yet</p>
-    {% else %}
-
-        <ul>
-            {% for task in tasks %}
-            <li>{{task.title}}</li>
-                <input type='hidden' name='task-id' value='{{task.id}}' />
-            </form>
-            <li>{{task.blogtext}}
-                <form method='POST' action='/delete-task' style='display:inline-block;'>
+    <!------------------BLOGS SHOWING------------------>  
+    <div id='blogs-showing' class='container'>
+        <h2 id='newblogtitlecolor'>NEW BLOGS</h2>
+        {% if tasks|length == 0 %}
+        <p id='no-tasks'>NO ENTRIES YET</p>
+        {% else %}
+            <ul>
+                {% for task in tasks %}
+                <div class='title-display'>
+                <li>{{task.title}}</li>
                     <input type='hidden' name='task-id' value='{{task.id}}' />
-                    <input type='submit' value='Done!' />
                 </form>
-            </li>
+                </div>
+                <div id='blog-display'>
+                <li>{{task.blogtext}}
+                    <form method='POST' action='/delete-task' style='display:inline-block;'>
+                    </div>
+                        <input type='hidden' name='task-id' value='{{task.id}}' />
+                        <input type='submit' id='Done' value='Remove!' />                    </form>
+                </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+    <hr />
+
+    <!------------------BLOGS IN DATABASE------------------>      
+    <div id='blog-list' class='container'>
+        <h2>BLOG HISTORY</h2>
+        <div id='title-database'>
+        <ul>
+            {% for task in completed_tasks %}
+            <li>{{task.title}}</li>
             {% endfor %}
         </ul>
+        </div>
+    </div>
 
-    {% endif %}
+</div>
+
 {% endblock %}

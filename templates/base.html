@@ -4,73 +4,199 @@
             <link href='https://fonts.googleapis.com/css?family=Bungee Shade' rel='stylesheet'>            
         <title>{{title}}</title>
         <style>
+
+                .site, #page {
+                    background: white;
+                }
+
                 body {
-                    background: red;
-                }
-    
-                h1 {
-                    font-family: 'Bungee Shade';font-size: 22px;
+                    max-width: 1180px;
+                    padding-right: 4%;
+                    padding-left: 4%;
+                    background: rgb(43, 137, 226);
                     text-align: center;
-                    color: blueviolet;
-                    background: black;
-                    border: dashed;
+                    font-family: Arial, Helvetica, sans-serif;
                 }
-    
+
+                .site-header {
+                }
+
+                .site-branding {
+                    padding: 50px;
+                }
+
+                #site-title {
+                    font-size: 100%;
+                    line-height: 1.3333;
+                    text-shadow: 0 0 3px #ff0000;
+                    font-family: 'Bungee Shade';font-size: 22px;
+                    font-size: 50px;
+                    color: rgb(43, 137, 226);
+                    text-align: center;
+                }
+
+                #site-description {
+                    color: #333;
+                    font-family: Arial;
+                    font-size: 20px;
+                    line-height: 1.8462;
+                    margin-bottom: 0;
+                    font-weight: 300;
+                    letter-spacing: 10px;
+                    text-align: center;
+                    
+                }
+
+                #site-navigation {
+                    background-color: #525252;
+                    padding: 0;
+                    margin-bottom: 0;
+                }
+     
+                #menu-primary {
+                    text-align: center;
+                    padding-left:0;
+                    padding: 0;
+                    margin-bottom: 0;
+                }
+
+                .menu-item{
+                    display: inline-block;
+                    font-size: 100%;
+                    text-align: center;
+                    padding: 0;
+                }
+
+                button {
+                    display: inline-block;
+                    font-size: 100%;
+                    text-align: center;
+                    padding: 10px;
+                }
+
+                .menu-image {
+                    padding: 0;
+                    margin: 0;
+                    padding: 0;
+                }
+
+                .image {
+                    max-width: 100%; 
+                    max-height: 100%;
+                }
+
                 .container {
-                    display: flex;
-                    flex-direction: column;
-                    background: green;
-                    align-items: center;
-                    border: dashed;
+                    text-align: left;
+                    padding-right: 4%;
+                    padding-left: 4%;
                 }
 
-                .blogtext {
-                    width: 100%;
-                    height: 150px;
-                    padding: 12px 20px;
+                #new-blog-field {
+                }
+
+                #blogs-showing {
+                    background: black;
+                    color: white;
+                }
+
+                #blog-list {
+                    border-bottom: 50px solid black;
+                }
+
+                .label {
+                    color: #333;
+                    font-size: 20px;
+                    line-height: 2;
+                    letter-spacing: 10px;
+                }
+
+                #titlebox {
+                    font-size: 30px;
                     box-sizing: border-box;
-                    border: 2px solid #ccc;
-                    border-radius: 4px;
-                    background-color: #f8f8f8;
-                    resize: none;
-                }
-
-                .titlebox {
                     width: 100%;
-                    height: 15px;
-                    padding: 12px 20px;
-                    box-sizing: border-box;
-                    border: 2px solid #ccc;
+                    padding: 0px 20px;
+                    border: 2px solid black;
                     border-radius: 4px;
-                    background-color: #f8f8f8;
+                    background-color: #bb9c9c;
                     resize: none;
+                    font-weight: bold;
+                    text-align: left;
                 }
 
-                .blogbox {
-                    border: dashed;
+                #blogtext {
+                    font-family: arial;
+                    font-size: 25px;
+                    box-sizing: border-box;
+                    width: 100%;
+                    padding: 12px 20px;
+                    border: 2px solid black;
+                    border-radius: 4px;
+                    resize: vertical;
+                    text-align: left;
                 }
 
-    
-                .error { color: rgb(202, 0, 0);
-                    font-size: 10px; 
-                }
-    
-
-                .submit {
+                .submit, #Done {
                     padding: 5px 15px; 
                     background: rgb(23, 23, 23); 
-                    border: 0 none;
                     border-radius: 5px;
                     font-size: 12px;
                     font-weight: 500;
                     color: white;
+                    margin: 5px;
                 }
-    
-                input {
-                    background-color: rgb(255, 255, 255);
+
+                #no-tasks {
+                    color: red;
+                    font-size: 20px;
+                    line-height: 2;
+                    letter-spacing: 10px;
+                }
+
+                ul {
+                    list-style: none;
+                    padding: 0;
+                }
+
+                .error { 
+                    color: rgb(202, 0, 0);
+                    font-size: 10px; 
+                }
+
+                .title-display {
+                    color: white;
+                    font-size: 30px;
+                    font-weight: bold;
+                    background: #bb9c9c;;
+                    padding-right: 4%;
+                    padding-left: 4%;
+                    border-radius: 4px;
+                }
+
+                #title-database {
+                    font-size: 30px;
+                    box-sizing: border-box;
+                    width: 100%;
+                    padding: 0px 20px;
+                    border-radius: 4px;
+                    background-color: #bb9c9c;
+                    resize: none;
                     font-weight: bold;
                     text-align: left;
                 }
+
+                #blog-display {
+                    border-radius: 4px;
+                    padding-right: 4%;
+                    padding-left: 4%; 
+                    color: black;
+                    background: white;
+                }
+
+                h2 {
+                    letter-spacing: 5px;
+                }
+
+                
 
             </style>
     </head>
@@ -80,4 +206,7 @@
     {% endblock %}
 
 </body>
+<footer>
+
+</footer>
 </html>
