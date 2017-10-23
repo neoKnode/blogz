@@ -11,23 +11,37 @@ db = SQLAlchemy(app)
 class Blogs(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(30))
+    blogtitle = db.Column(db.String(30))
     blogtext = db.Column(db.String(500))
     completed = db.Column(db.Boolean)
 
-    def __init__(self, title, blogtext):
-        self.title = title
+    def __init__(self, blogtitle, blogtext):
+        self.blogtitle = blogtitle
         self.blogtext = blogtext
         self.completed = False
+
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
 
+    tasks = Blogs.query.filter_by(completed=False).all()
+    completed_tasks = Blogs.query.filter_by(completed=True).all()
+
+    return render_template('blog.html', title='Build a Blog', 
+            tasks=tasks, completed_tasks=completed_tasks)
+
+
+@app.route('/newpost', methods=['POST', 'GET'])
+def add_blog():
+
+    tasks = Blogs.query.filter_by(completed=False).all()
+    completed_tasks = Blogs.query.filter_by(completed=True).all()
     title_error = ''
     blog_error = ''
+
     
     if request.method == 'POST':
-        title_name = request.form['title']
+        title_name = request.form['blogtitle']
         blogtext_name = request.form['blogtext']
         new_entry = Blogs(title_name,blogtext_name)
         db.session.add(new_entry)
@@ -39,27 +53,17 @@ def index():
         if blogtext_name == '':
             blog_error = 'Please write some words'
 
-    tasks = Blogs.query.filter_by(completed=False).all()
-    completed_tasks = Blogs.query.filter_by(completed=True).all()
-
     if not title_error and not blog_error:
-        return render_template('todos.html', title='Build a Blog', 
+        return render_template('/newpost.html', title='Build a Blog', 
             tasks=tasks, completed_tasks=completed_tasks)
     else:
-        return render_template('todos.html', title='Build a Blog', 
+        return render_template('/newpost.html', title='Create Blog', 
         tasks=tasks, completed_tasks=completed_tasks, title_error=title_error, 
         blog_error=blog_error)
 
 
-#@app.route('/blog', methods=['GET', 'POST'])
-#def add_blog():
 
-
-#@app.route('newpost')
-#def newpost():
-
-
-@app.route('/delete-task', methods=['POST'])
+@app.route('/delete-task', methods=['GET','POST'])
 def delete_blog():
 
     task_id = int(request.form['task-id'])
@@ -68,7 +72,11 @@ def delete_blog():
     db.session.add(task)
     db.session.commit()
 
-    return redirect('/')
+    tasks = Blogs.query.filter_by(completed=False).all()
+    completed_tasks = Blogs.query.filter_by(completed=True).all()
+
+    return render_template('blog.html', title='Build a Blog', 
+            tasks=tasks, completed_tasks=completed_tasks)
 
 if __name__ == '__main__':
     app.run()

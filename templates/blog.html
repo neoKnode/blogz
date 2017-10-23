@@ -2,23 +2,6 @@
 
 {% block content %}
 
-    <!------------------CREATE A BLOG------------------>  
-    <div id='new-blog-field' class='container'>
-        <h2>CREATE A BLOG</h2>
-        <form method='post'>
-            <label for='title' class='label'>TITLE:
-                <input type='text' id='titlebox' name='title' value='{{ title }}' />
-                <p class='error'>{{ title_error }}</p>
-            </label>
-            <label for='blogtext' class='label'>BODY:
-                <textarea id="blogtext" name="blogtext" value='{{ blogtext }}'></textarea>
-                <p class='error'>{{ blog_error }}</p>
-            </label>
-            <input type='submit' class='submit' value='Add Blog' />
-        </form>
-    </div>
-    <hr />
-
     <!------------------NEW BLOGS------------------>  
     <div id='blogs-showing' class='container'>
         <h2 id='newblogtitlecolor'>NEW BLOGS</h2>
@@ -28,7 +11,7 @@
             <ul>
                 {% for task in tasks %}
                 <div class='title-display'>
-                <li>{{task.title}}</li>
+                <li>{{task.blogtitle}}</li>
                     <input type='hidden' name='task-id' value='{{task.id}}' />
                 </form>
                 </div>
@@ -37,7 +20,8 @@
                     <form method='POST' action='/delete-task' style='display:inline-block;'>
                     </div>
                         <input type='hidden' name='task-id' value='{{task.id}}' />
-                        <input type='submit' id='Done' value='Remove!' />                    </form>
+                        <input type='submit' id='Done' value='Remove!' />                    
+                    </form>
                 </li>
                 {% endfor %}
             </ul>
@@ -51,7 +35,7 @@
         <div id='title-database'>
         <ul>
             {% for task in completed_tasks %}
-            <li>{{task.title}}</li>
+            <li>{{task.blogtitle}}</li>
             {% endfor %}
         </ul>
         </div>

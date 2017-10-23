@@ -1,209 +1,222 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link type="text/css" rel="stylesheet" href="styles.css"/>
-        <link href='https://fonts.googleapis.com/css?family=Bungee Shade' rel='stylesheet'>            
+        <link type="text/css" rel="stylesheet" href="styles.css"/>       
+        <link href="https://fonts.googleapis.com/css?family=Bungee Shade" rel="stylesheet"/>
         <title>{{title}}</title>
         <style>
+            .site, #page {
+                background: white;
+            }
+            
+            body {
+                max-width: 1180px;
+                padding-right: 4%;
+                padding-left: 4%;
+                background: rgb(43, 137, 226);
+                text-align: center;
+                font-family: Arial, Helvetica, sans-serif;
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+            
+            .site-branding {
+                padding: 50px;
+            }
+            
+            #site-title {
+                font-size: 300%;
+                line-height: 1.3333;
+                text-shadow: 0 0 3px #ff0000;
+                font-family: 'Bungee Shade';
+                color: rgb(43, 137, 226);
+                text-align: center;
+                margin-top: 0;
+            }
+            
+            #site-description {
+                color: #333;
+                font-family: Arial;
+                font-size: 20px;
+                line-height: 1.8462;
+                margin-bottom: 0;
+                font-weight: 300;
+                letter-spacing: 10px;
+                text-align: center;   
+            }
+            
+            #site-navigation {
+                background-color: #525252;
+                padding: 0;
+                margin-bottom: 0;
+            }
+            
+            #menu-primary {
+                text-align: center;
+                padding-left:0;
+                padding: 0;
+                margin-bottom: 0;
+            }
+            
+            .menu-item{
+                display: inline-block;
+                font-size: 100%;
+                text-align: center;
+                float: left;
+                width: 50%;
+                height: 100%;
+            }
+            
+            button {
+                display: inline-block;
+                font-size: 100%;
+                text-align: center;
+                padding: 10px;
+                background-color: rgb(0, 0, 0);
+                color: rgb(255, 255, 255);
+                float: center;
+                width: 100%;
+                height: 100%;
+                border: none;           
+            }  
 
-                .site, #page {
-                    background: white;
-                }
-
-                body {
-                    max-width: 1180px;
-                    padding-right: 4%;
-                    padding-left: 4%;
-                    background: rgb(43, 137, 226);
-                    text-align: center;
-                    font-family: Arial, Helvetica, sans-serif;
-                    margin-top: 0;
-                    margin-bottom: 0;
-                }
-
-                .site-header {
-                }
-
-                .site-branding {
-                    padding: 50px;
-                }
-
-                #site-title {
-                    font-size: 100%;
-                    line-height: 1.3333;
-                    text-shadow: 0 0 3px #ff0000;
-                    font-family: 'Bungee Shade';font-size: 22px;
-                    font-size: 50px;
-                    color: rgb(43, 137, 226);
-                    text-align: center;
-                }
-
-                #site-description {
-                    color: #333;
-                    font-family: Arial;
-                    font-size: 20px;
-                    line-height: 1.8462;
-                    margin-bottom: 0;
-                    font-weight: 300;
-                    letter-spacing: 10px;
-                    text-align: center;
-                    
-                }
-
-                #site-navigation {
-                    background-color: #525252;
-                    padding: 0;
-                    margin-bottom: 0;
-                }
-     
-                #menu-primary {
-                    text-align: center;
-                    padding-left:0;
-                    padding: 0;
-                    margin-bottom: 0;
-                }
-
-                .menu-item{
-                    display: inline-block;
-                    font-size: 100%;
-                    text-align: center;
-                    padding: 0;
-                }
-
-                button {
-                    display: inline-block;
-                    font-size: 100%;
-                    text-align: center;
-                    padding: 10px;
-                }
-
-                .menu-image {
-                    padding: 0;
-                    margin: 0;
-                    padding: 0;
-                }
-
-                .image {
-                    max-width: 100%; 
-                    max-height: 100%;
-                }
-
-                .container {
-                    text-align: left;
-                    padding-right: 4%;
-                    padding-left: 4%;
-                }
-
-                #new-blog-field {
-                }
-
-                #blogs-showing {
-                    background: black;
-                    color: white;
-                }
-
-                #blog-list {
-                    border-bottom: 50px solid black;
-                }
-
-                .label {
-                    color: #333;
-                    font-size: 20px;
-                    line-height: 2;
-                    letter-spacing: 10px;
-                }
-
-                #titlebox {
-                    font-size: 30px;
-                    box-sizing: border-box;
-                    width: 100%;
-                    padding: 0px 20px;
-                    border: 2px solid black;
-                    border-radius: 4px;
-                    background-color: #bb9c9c;
-                    resize: none;
-                    font-weight: bold;
-                    text-align: left;
-                }
-
-                #blogtext {
-                    font-family: arial;
-                    font-size: 25px;
-                    box-sizing: border-box;
-                    width: 100%;
-                    padding: 12px 20px;
-                    border: 2px solid black;
-                    border-radius: 4px;
-                    resize: vertical;
-                    text-align: left;
-                }
-
-                .submit, #Done {
-                    padding: 5px 15px; 
-                    background: rgb(23, 23, 23); 
-                    border-radius: 5px;
-                    font-size: 12px;
-                    font-weight: 500;
-                    color: white;
-                    margin: 5px;
-                }
-
-                #no-tasks {
-                    color: red;
-                    font-size: 20px;
-                    line-height: 2;
-                    letter-spacing: 10px;
-                }
-
-                ul {
-                    list-style: none;
-                    padding: 0;
-                }
-
-                .error { 
-                    color: rgb(202, 0, 0);
-                    font-size: 10px; 
-                }
-
-                .title-display {
-                    color: white;
-                    font-size: 30px;
-                    font-weight: bold;
-                    background: #bb9c9c;;
-                    padding-right: 4%;
-                    padding-left: 4%;
-                    border-radius: 4px;
-                }
-
-                #title-database {
-                    font-size: 30px;
-                    box-sizing: border-box;
-                    width: 100%;
-                    padding: 0px 20px;
-                    border-radius: 4px;
-                    background-color: #bb9c9c;
-                    resize: none;
-                    font-weight: bold;
-                    text-align: left;
-                }
-
-                #blog-display {
-                    border-radius: 4px;
-                    padding-right: 4%;
-                    padding-left: 4%; 
-                    color: black;
-                    background: white;
-                }
-
-                h2 {
-                    letter-spacing: 5px;
-                }
-
-                
-
-            </style>
+            button:hover {
+                display: inline-block;
+                font-size: 100%;
+                text-align: center;
+                padding: 10px;
+                background-color: rgb(255, 255, 255);
+                color: rgb(232, 100, 12);
+                float: center;
+                width: 100%;
+                height: 100%;
+                border: none;               
+            }  
+            
+            .menu-image {
+                padding: 0;
+                margin: 0;
+            }
+            
+            .image {
+                max-width: 100%; 
+                max-height: 100%;
+            }
+            
+            .container {
+                text-align: left;
+                padding-right: 13%;
+                padding-left: 13%;
+            }
+            
+            #new-blog-field {
+            }
+            
+            #blogs-showing {
+                background: black;
+                color: white;
+            }
+            
+            #blog-list {
+                border-bottom: 50px solid black;
+            }
+            
+            .label {
+                color: #333;
+                font-size: 20px;
+                line-height: 2;
+                letter-spacing: 10px;
+            }
+            
+            #titlebox {
+                font-size: 30px;
+                box-sizing: border-box;
+                width: 100%;
+                padding: 0px 20px;
+                border: 2px solid black;
+                border-radius: 4px;
+                background-color: rgb(255, 156, 156);
+                resize: none;
+                font-weight: bold;
+                text-align: left;
+            }
+            
+            #blogtext {
+                font-family: arial;
+                font-size: 25px;
+                box-sizing: border-box;
+                width: 100%;
+                padding: 12px 20px;
+                border: 2px solid black;
+                border-radius: 4px;
+                resize: vertical;
+                text-align: left;
+            }
+            
+            .submit, #Done {
+                padding: 5px 15px; 
+                background: rgb(23, 23, 23); 
+                border-radius: 5px;
+                font-size: 12px;
+                font-weight: 500;
+                color: white;
+                margin: 5px;
+            }
+            
+            #no-tasks {
+                color: red;
+                font-size: 20px;
+                line-height: 2;
+                letter-spacing: 10px;
+            }
+            
+            ul {
+                list-style: none;
+                padding: 0;
+            }
+            
+            .error { 
+                color: rgb(202, 0, 0);
+                font-size: 10px; 
+            }
+            
+            .title-display {
+                color: white;
+                font-size: 30px;
+                font-weight: bold;
+                background: #bb9c9c;;
+                padding-right: 4%;
+                padding-left: 4%;
+                border-radius: 4px;
+            }
+            
+            #title-database {
+                font-size: 30px;
+                box-sizing: border-box;
+                width: 100%;
+                border-radius: 4px;
+                resize: none;
+                font-weight: bold;
+                text-align: left;
+            }
+            
+            #blog-display {
+                border-radius: 4px;
+                padding-right: 4%;
+                padding-left: 4%; 
+                color: black;
+                background: white;
+            }
+            
+            h2 {
+                letter-spacing: 5px;
+            }
+            
+        </style>       
     </head>
 <body>
+
+
 <!------------------HEADER------------------>  
 <div id='page' class='site'>
     <header id='masthead' role='banner'>
@@ -212,23 +225,28 @@
             <h2 id="site-description">DATA + BASE + BLOG</h2>
         </div>
         <nav id="site-navigation" role="navigation">
-                <ul id="menu-primary">
-                    <li id="Home" class="menu-item">
-                        <button> 
-                            <span>Main Page</span>
-                        </button>
-                    <li id="Posts" class="menu-item">
-                        <button> 
-                            <span>Blog Posts</span>
-                        </button>
-                </ul>
-                    <!----<div id='fillspace' class='menu-item'></div>---->
+            <div id="menu-primary">
+                <div id="Home" class="menu-item">
+                    <a href='/'>
+                    <button> 
+                        <span>MAIN PAGE</span>
+                    </button>
+                    </a>
+                </div>
+                <div id="Posts" class="menu-item">
+                    <a href='/newpost'>
+                    <button> 
+                        <span>CREATE BLOG</span>
+                    </button>
+                    </a>
+                </div>
+            </div>
         </nav>
     </header>
 
     <div id='menu-image' class='menu-image'>
         <img src='https://static.pexels.com/photos/51387/mount-everest-himalayas-nuptse-lhotse-51387.jpeg' 
-        class='image' /></div>
+        class='image' alt='Go For It!'/></div>
     
     {% block content %}
     {% endblock %}
