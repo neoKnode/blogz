@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-            <link href='https://fonts.googleapis.com/css?family=Bungee Shade' rel='stylesheet'>            
+        <link type="text/css" rel="stylesheet" href="styles.css"/>
+        <link href='https://fonts.googleapis.com/css?family=Bungee Shade' rel='stylesheet'>            
         <title>{{title}}</title>
         <style>
 
@@ -16,6 +17,8 @@
                     background: rgb(43, 137, 226);
                     text-align: center;
                     font-family: Arial, Helvetica, sans-serif;
+                    margin-top: 0;
+                    margin-bottom: 0;
                 }
 
                 .site-header {
@@ -201,7 +204,32 @@
             </style>
     </head>
 <body>
+<!------------------HEADER------------------>  
+<div id='page' class='site'>
+    <header id='masthead' role='banner'>
+        <div class="site-branding">
+            <h1 id="site-title">Build-a-Blog</h1>
+            <h2 id="site-description">DATA + BASE + BLOG</h2>
+        </div>
+        <nav id="site-navigation" role="navigation">
+                <ul id="menu-primary">
+                    <li id="Home" class="menu-item">
+                        <button> 
+                            <span>Main Page</span>
+                        </button>
+                    <li id="Posts" class="menu-item">
+                        <button> 
+                            <span>Blog Posts</span>
+                        </button>
+                </ul>
+                    <!----<div id='fillspace' class='menu-item'></div>---->
+        </nav>
+    </header>
 
+    <div id='menu-image' class='menu-image'>
+        <img src='https://static.pexels.com/photos/51387/mount-everest-himalayas-nuptse-lhotse-51387.jpeg' 
+        class='image' /></div>
+    
     {% block content %}
     {% endblock %}
 

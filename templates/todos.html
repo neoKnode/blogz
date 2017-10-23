@@ -2,50 +2,24 @@
 
 {% block content %}
 
-<!------------------HEADER------------------>  
-<div id='page' class='site'>
-    <header id='masthead' role='banner'>
-        <div class="site-branding">
-            <h1 id="site-title">Build-a-Blog</h1>
-            <h2 id="site-description">DATA + BASE + BLOG</h2>
-        </div>
-        <nav id="site-navigation" role="navigation">
-
-                <ul id="menu-primary">
-                    <li id="Home" class="menu-item">
-                        <button> 
-                            <span>Main Page</span>
-                        </button>
-                    <li id="Posts" class="menu-item">
-                        <button> 
-                            <span>Blog Posts</span>
-                        </button>
-                </ul>
-                    <!----<div id='fillspace' class='menu-item'></div>---->
-	
-        </nav>
-    </header>
-
-    <div id='menu-image' class='menu-image'>
-        <img src='https://static.pexels.com/photos/51387/mount-everest-himalayas-nuptse-lhotse-51387.jpeg' 
-        class='image' /></div>
-
-    <!------------------BLOG ENTRY FIELD------------------>  
+    <!------------------CREATE A BLOG------------------>  
     <div id='new-blog-field' class='container'>
         <h2>CREATE A BLOG</h2>
         <form method='post'>
             <label for='title' class='label'>TITLE:
-                <input type='text' id='titlebox' name='title' value='This is a font test.' />
+                <input type='text' id='titlebox' name='title' value='{{ title }}' />
+                <p class='error'>{{ title_error }}</p>
             </label>
             <label for='blogtext' class='label'>BODY:
-                <textarea id="blogtext" name="blogtext"></textarea>
+                <textarea id="blogtext" name="blogtext" value='{{ blogtext }}'></textarea>
+                <p class='error'>{{ blog_error }}</p>
             </label>
             <input type='submit' class='submit' value='Add Blog' />
         </form>
     </div>
     <hr />
 
-    <!------------------BLOGS SHOWING------------------>  
+    <!------------------NEW BLOGS------------------>  
     <div id='blogs-showing' class='container'>
         <h2 id='newblogtitlecolor'>NEW BLOGS</h2>
         {% if tasks|length == 0 %}
@@ -71,7 +45,7 @@
     </div>
     <hr />
 
-    <!------------------BLOGS IN DATABASE------------------>      
+    <!------------------BLOG HISTORY------------------>      
     <div id='blog-list' class='container'>
         <h2>BLOG HISTORY</h2>
         <div id='title-database'>

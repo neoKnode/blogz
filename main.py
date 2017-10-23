@@ -20,21 +20,43 @@ class Blogs(db.Model):
         self.blogtext = blogtext
         self.completed = False
 
-
 @app.route('/', methods=['POST', 'GET'])
 def index():
 
+    title_error = ''
+    blog_error = ''
+    
     if request.method == 'POST':
         title_name = request.form['title']
         blogtext_name = request.form['blogtext']
         new_entry = Blogs(title_name,blogtext_name)
         db.session.add(new_entry)
         db.session.commit()
+    
+        if title_name == '':
+            title_error = 'Please enter a title'
+
+        if blogtext_name == '':
+            blog_error = 'Please write some words'
 
     tasks = Blogs.query.filter_by(completed=False).all()
     completed_tasks = Blogs.query.filter_by(completed=True).all()
-    return render_template('todos.html', title='Build a Blog', 
-        tasks=tasks, completed_tasks=completed_tasks)
+
+    if not title_error and not blog_error:
+        return render_template('todos.html', title='Build a Blog', 
+            tasks=tasks, completed_tasks=completed_tasks)
+    else:
+        return render_template('todos.html', title='Build a Blog', 
+        tasks=tasks, completed_tasks=completed_tasks, title_error=title_error, 
+        blog_error=blog_error)
+
+
+#@app.route('/blog', methods=['GET', 'POST'])
+#def add_blog():
+
+
+#@app.route('newpost')
+#def newpost():
 
 
 @app.route('/delete-task', methods=['POST'])
@@ -50,3 +72,4 @@ def delete_blog():
 
 if __name__ == '__main__':
     app.run()
+
