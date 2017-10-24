@@ -1,5 +1,6 @@
-from flask import Flask, request, render_template, redirect
+from flask import Flask, request, render_template, redirect, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
+import os
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -8,6 +9,9 @@ app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
 
 
+####################################
+#            Database              #
+####################################
 class Blogs(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
@@ -21,6 +25,17 @@ class Blogs(db.Model):
         self.completed = False
 
 
+####################################
+#              Styles              #
+####################################
+@app.route('/styles.css')
+def styles():
+    return send_from_directory(os.path.join(app.root_path,'static/css'),'styles.css')
+
+
+####################################
+#           Blog list              #
+####################################
 @app.route('/', methods=['POST', 'GET'])
 def index():
 
@@ -31,6 +46,28 @@ def index():
             tasks=tasks, completed_tasks=completed_tasks)
 
 
+####################################
+#           Delete blog            #
+####################################
+@app.route('/delete-task', methods=['GET','POST'])
+def delete_blog():
+
+    task_id = int(request.form['task-id'])
+    task = Blogs.query.get(task_id)
+    task.completed = True
+    db.session.add(task)
+    db.session.commit()
+
+    tasks = Blogs.query.filter_by(completed=False).all()
+    completed_tasks = Blogs.query.filter_by(completed=True).all()
+
+    return render_template('blog.html', title='Build a Blog', 
+            tasks=tasks, completed_tasks=completed_tasks)
+    
+
+####################################
+#            Add a blog            #
+####################################
 @app.route('/newpost', methods=['POST', 'GET'])
 def add_blog():
 
@@ -62,21 +99,6 @@ def add_blog():
         blog_error=blog_error)
 
 
-
-@app.route('/delete-task', methods=['GET','POST'])
-def delete_blog():
-
-    task_id = int(request.form['task-id'])
-    task = Blogs.query.get(task_id)
-    task.completed = True
-    db.session.add(task)
-    db.session.commit()
-
-    tasks = Blogs.query.filter_by(completed=False).all()
-    completed_tasks = Blogs.query.filter_by(completed=True).all()
-
-    return render_template('blog.html', title='Build a Blog', 
-            tasks=tasks, completed_tasks=completed_tasks)
 
 if __name__ == '__main__':
     app.run()

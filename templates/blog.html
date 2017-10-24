@@ -2,45 +2,25 @@
 
 {% block content %}
 
-    <!------------------NEW BLOGS------------------>  
+    <!------------------BLOGS VIEW------------------>  
     <div id='blogs-showing' class='container'>
-        <h2 id='newblogtitlecolor'>NEW BLOGS</h2>
+        <h2 id='new-blogs'>NEW BLOGS</h2>
         {% if tasks|length == 0 %}
         <p id='no-tasks'>NO ENTRIES YET</p>
         {% else %}
             <ul>
                 {% for task in tasks %}
-                <div class='title-display'>
-                <li>{{task.blogtitle}}</li>
+                <li id='blogtitles'>{{task.blogtitle}}</li>
                     <input type='hidden' name='task-id' value='{{task.id}}' />
                 </form>
-                </div>
-                <div id='blog-display'>
-                <li>{{task.blogtext}}
+                <li id='blogbody'>{{task.blogtext}}
                     <form method='POST' action='/delete-task' style='display:inline-block;'>
-                    </div>
                         <input type='hidden' name='task-id' value='{{task.id}}' />
                         <input type='submit' id='Done' value='Remove!' />                    
-                    </form>
+                    </form> 
                 </li>
                 {% endfor %}
             </ul>
         {% endif %}
     </div>
-    <hr />
-
-    <!------------------BLOG HISTORY------------------>      
-    <div id='blog-list' class='container'>
-        <h2>BLOG HISTORY</h2>
-        <div id='title-database'>
-        <ul>
-            {% for task in completed_tasks %}
-            <li>{{task.blogtitle}}</li>
-            {% endfor %}
-        </ul>
-        </div>
-    </div>
-
-</div>
-
 {% endblock %}
