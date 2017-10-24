@@ -91,12 +91,22 @@ def add_blog():
             blog_error = 'Please write some words'
 
     if not title_error and not blog_error:
+       # blog_submitted = str(hours) + ':' + str(minutes)
+       # return redirect('/valid-time?time={0}'.format(time))
+
         return render_template('/newpost.html', title='Build a Blog', 
             tasks=tasks, completed_tasks=completed_tasks)
     else:
         return render_template('/newpost.html', title='Create Blog', 
-        tasks=tasks, completed_tasks=completed_tasks, title_error=title_error, 
-        blog_error=blog_error)
+        tasks=tasks, completed_tasks=completed_tasks, title_name=title_name, 
+        blogtext_name=blogtext_name, title_error=title_error, blog_error=blog_error)
+
+
+
+#@app.route('/valid-time')
+#def valid_time():
+#    time = request.args.get('time')
+#    return '<h1>You submitted {0}. Thanks for submitting a valid time!</h1>'.format(time)
 
 
 
