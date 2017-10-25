@@ -3,19 +3,5 @@
 {% block content %}
 
 <!------------------CREATE A BLOG------------------>  
-    <div id='new-blog-field' class='container'>
-            <h2>CREATE A BLOG</h2>
-            <form action='/validate-blog' method='post'>
-                <label for='blogtitle' class='label'>TITLE:
-                    <input type='text' id='titlebox' name='blogtitle' value="{{ title_name }}" />
-                    <p class='error'>{{ title_error }}</p>
-                </label>
-                <label for='blogtext' class='label'>BODY:
-                    <textarea id="blogtext" name="blogtext" value="{{ blogtext_name }}">{{ blogtext_name }}</textarea>
-                    <p class='error'>{{ blog_error }}</p>
-                </label>
-                <input type='submit' class='submit' value='Add Blog' />
-            </form>
-        </div>
 
 {% endblock %}
