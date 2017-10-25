@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, send_from_directory
+from flask import Flask, request, render_template, redirect, send_from_directory,flash
 from flask_sqlalchemy import SQLAlchemy
 import os
 
@@ -47,9 +47,18 @@ def index():
 
 
 ####################################
+#            Add a blog            #
+####################################
+@app.route('/newpost', methods=['POST', 'GET'])
+def add_blog():
+
+    return render_template('newpost.html', title='Create Blog')
+
+
+####################################
 #           Delete blog            #
 ####################################
-@app.route('/delete-task', methods=['GET','POST'])
+@app.route('/delete-blog', methods=['GET','POST'])
 def delete_blog():
 
     task_id = int(request.form['task-id'])
@@ -66,50 +75,40 @@ def delete_blog():
     
 
 ####################################
-#            Add a blog            #
+#          Validate blog           #
 ####################################
-@app.route('/newpost', methods=['POST', 'GET'])
-def add_blog():
+@app.route('/validate-blog', methods=['POST'])
+def valid_blog():
 
-    tasks = Blogs.query.filter_by(completed=False).all()
-    completed_tasks = Blogs.query.filter_by(completed=True).all()
     title_error = ''
     blog_error = ''
 
-    
     if request.method == 'POST':
         title_name = request.form['blogtitle']
         blogtext_name = request.form['blogtext']
         new_entry = Blogs(title_name,blogtext_name)
-        db.session.add(new_entry)
-        db.session.commit()
-    
-        if title_name == '':
-            title_error = 'Please enter a title'
 
-        if blogtext_name == '':
-            blog_error = 'Please write some words'
+    if title_name == '':
+        title_error = 'Please enter a title'
+
+    if blogtext_name == '':
+        blog_error = 'Please write some words'
 
     if not title_error and not blog_error:
-       # blog_submitted = str(hours) + ':' + str(minutes)
-       # return redirect('/valid-time?time={0}'.format(time))
-
-        return render_template('/newpost.html', title='Build a Blog', 
-            tasks=tasks, completed_tasks=completed_tasks)
+        db.session.add(new_entry)
+        db.session.commit()
+        return redirect ('/')
     else:
         return render_template('/newpost.html', title='Create Blog', 
-        tasks=tasks, completed_tasks=completed_tasks, title_name=title_name, 
-        blogtext_name=blogtext_name, title_error=title_error, blog_error=blog_error)
+            title_name=title_name, blogtext_name=blogtext_name, 
+            title_error=title_error, blog_error=blog_error)
 
 
-
-#@app.route('/valid-time')
-#def valid_time():
-#    time = request.args.get('time')
-#    return '<h1>You submitted {0}. Thanks for submitting a valid time!</h1>'.format(time)
-
+####################################
+#             New Post             #
+####################################
+#@app.route('/page')
 
 
 if __name__ == '__main__':
     app.run()
-
