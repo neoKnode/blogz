@@ -98,6 +98,9 @@ def valid_blog():
         db.session.add(new_entry)
         db.session.commit()
         return redirect ('/')
+        #blog_id = Blogs.query.filter_by(id='').first()
+        #return redirect('/page?id={0}'.format(blog_id))
+
     else:
         return render_template('/newpost.html', title='Create Blog', 
             title_name=title_name, blogtext_name=blogtext_name, 
@@ -108,7 +111,10 @@ def valid_blog():
 #             New Post             #
 ####################################
 #@app.route('/page')
+#def new_post_page:
 
+    #blog_id = request.args.get('blog_id')
+    #return render_template('/post.html')
 
 
 if __name__ == '__main__':
