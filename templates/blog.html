@@ -10,7 +10,7 @@
         {% else %}
             <ul>
                 {% for blog in blogged %}
-                <li id='blogtitles'>{{blog.blogtitle}}</li>
+                <li id='blogtitles'><a href='/page?id={{blog.id}}'>{{blog.blogtitle}}</li></a>
                     <input type='hidden' name='blog-id' value='{{blog.id}}' />
                 </form>
                 <br>

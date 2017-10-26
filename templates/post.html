@@ -1,16 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>
-    <br>
-{% for blog in Blogs %}
-    {{ blog.blogtitle }}
+<div class='container'>
 
-    {{ blog.blogtext }}
-
-{% endfor %}
+    <p id='new_title'>{{ new_title }}</p>
+    <p id='new_body'>{{ new_body }}</p>
 
 
-
-
+</div>
 {% endblock %}
