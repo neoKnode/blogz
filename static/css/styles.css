@@ -145,7 +145,7 @@ button:hover {
     text-align: left;
 }
 
-.submit, #Done {
+.submit, #Delete-button {
     padding: 5px 15px; 
     background: rgb(23, 23, 23); 
     border-radius: 5px;
@@ -155,7 +155,7 @@ button:hover {
     margin: 5px;
 }
 
-#no-tasks {
+#no-blogs {
     color: #ff5d2b;
     font-size: 20px;
     letter-spacing: 10px;

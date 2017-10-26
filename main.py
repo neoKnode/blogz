@@ -39,11 +39,11 @@ def styles():
 @app.route('/', methods=['POST', 'GET'])
 def index():
 
-    tasks = Blogs.query.filter_by(completed=False).all()
-    completed_tasks = Blogs.query.filter_by(completed=True).all()
+    blogged = Blogs.query.filter_by(completed=False).all()
+    deleted_blogs = Blogs.query.filter_by(completed=True).all()
 
     return render_template('blog.html', title='Build a Blog', 
-            tasks=tasks, completed_tasks=completed_tasks)
+            blogged=blogged, deleted_blogs=deleted_blogs)
 
 
 ####################################
@@ -61,17 +61,17 @@ def add_blog():
 @app.route('/delete-blog', methods=['GET','POST'])
 def delete_blog():
 
-    task_id = int(request.form['task-id'])
-    task = Blogs.query.get(task_id)
-    task.completed = True
-    db.session.add(task)
+    blog_id = int(request.form['blog-id'])
+    blog = Blogs.query.get(blog_id)
+    blog.completed = True
+    db.session.add(blog)
     db.session.commit()
 
-    tasks = Blogs.query.filter_by(completed=False).all()
-    completed_tasks = Blogs.query.filter_by(completed=True).all()
+    blogged = Blogs.query.filter_by(completed=False).all()
+    deleted_blogs = Blogs.query.filter_by(completed=True).all()
 
     return render_template('blog.html', title='Build a Blog', 
-            tasks=tasks, completed_tasks=completed_tasks)
+            blogged=blogged, deleted_blogs=deleted_blogs)
     
 
 ####################################
@@ -84,37 +84,38 @@ def valid_blog():
     blog_error = ''
 
     if request.method == 'POST':
-        title_name = request.form['blogtitle']
-        blogtext_name = request.form['blogtext']
-        new_entry = Blogs(title_name,blogtext_name)
+        title_of_blog = request.form['blogtitle']
+        body_of_blog = request.form['blogtext']
+        new_entry = Blogs(title_of_blog,body_of_blog)
 
-    if title_name == '':
+    if title_of_blog == '':
         title_error = 'Please enter a title'
 
-    if blogtext_name == '':
+    if body_of_blog == '':
         blog_error = 'Please write some words'
 
     if not title_error and not blog_error:
         db.session.add(new_entry)
         db.session.commit()
-        return redirect ('/')
-        #blog_id = Blogs.query.filter_by(id='').first()
-        #return redirect('/page?id={0}'.format(blog_id))
-
+        return redirect('/page?id={0}'.format(new_entry))
     else:
         return render_template('/newpost.html', title='Create Blog', 
-            title_name=title_name, blogtext_name=blogtext_name, 
+            title_of_blog=title_of_blog, body_of_blog=body_of_blog, 
             title_error=title_error, blog_error=blog_error)
 
 
 ####################################
 #             New Post             #
 ####################################
-#@app.route('/page')
-#def new_post_page:
+@app.route('/page?id=')
+def new_post_page():
+    
+    blog_id = int(request.form['blog-id'])
+    blog = Blogs.query.get(blog_id)
 
-    #blog_id = request.args.get('blog_id')
-    #return render_template('/post.html')
+    blogpost = Blogs.query.filter_by(id={blog_id}).max(blog_id)
+
+    return render_template('/post.html')
 
 
 if __name__ == '__main__':
