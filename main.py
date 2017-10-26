@@ -35,7 +35,7 @@ def styles():
 
 
 ####################################
-#           Blog list              #
+#           Post list              #
 ####################################
 @app.route('/', methods=['POST', 'GET'])
 def index():
@@ -48,7 +48,7 @@ def index():
 
 
 ####################################
-#            Add a blog            #
+#            Add a post            #
 ####################################
 @app.route('/newpost', methods=['POST', 'GET'])
 def add_blog():
@@ -57,7 +57,7 @@ def add_blog():
 
 
 ####################################
-#           Delete blog            #
+#           Delete post            #
 ####################################
 @app.route('/delete-blog', methods=['GET','POST'])
 def delete_blog():
@@ -76,7 +76,7 @@ def delete_blog():
     
 
 ####################################
-#          Validate blog           #
+#          Validate post           #
 ####################################
 @app.route('/validate-blog', methods=['POST'])
 def valid_blog():
@@ -86,13 +86,13 @@ def valid_blog():
 
     if request.method == 'POST':
         title_of_blog = request.form['blogtitle']
-        new_body_of_blog = request.form['blogtext']
-        new_entry = Blogs(title_of_blog,new_body_of_blog)
+        body_of_blog = request.form['blogtext']
+        new_entry = Blogs(title_of_blog,body_of_blog)
 
     if title_of_blog == '':
         title_error = 'Please enter a title'
 
-    if new_body_of_blog == '':
+    if body_of_blog == '':
         blog_error = 'Please write some words'
 
     if not title_error and not blog_error:
@@ -103,12 +103,12 @@ def valid_blog():
         return redirect('/page?id=' + id)
     else:
         return render_template('/newpost.html', title='Create Blog', 
-            title_of_blog=title_of_blog, new_body_of_blog=new_body_of_blog, 
+            title_of_blog=title_of_blog, body_of_blog=body_of_blog, 
             title_error=title_error, blog_error=blog_error)
 
 
 ####################################
-#             New Post             #
+#          View a Post             #
 ####################################
 @app.route('/page')
 def new_post_page():
