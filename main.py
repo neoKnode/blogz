@@ -4,14 +4,14 @@ import os
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://build-a-blog:buildablog@localhost:8889/build-a-blog'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://blogz:blogz@localhost:8889/blogz'
 app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
 app.secret_key = 'y337kGcys&zP3B'
 
 
 ####################################
-#            Database              #
+#          Blog Database           #
 ####################################
 class Blogs(db.Model):
 
@@ -27,6 +27,83 @@ class Blogs(db.Model):
 
 
 ####################################
+#          User Database           #
+####################################
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(120), unique=True)
+    password = db.Column(db.String(120))
+
+    def __init__(self, email, password):
+        self.email = email
+        self.password = password
+
+
+####################################
+#             Register             #
+####################################
+@app.route('/register', methods=['POST', 'GET'])
+def register():
+
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        verify = request.form['verify']
+
+        # TODO - validate user's data
+
+        existing_user = User.query.filter_by(email=email).first()
+        if not existing_user:
+            new_user = User(email, password)
+            db.session.add(new_user)
+            db.session.commit()
+            # TODO - "Remember" the user 
+            return redirect('/blog')
+        else:
+            # TODO - user better response messaging
+            return '<h1>Duplicate users</h1>'
+    return render_template('signup.html')
+
+
+
+
+####################################
+#              Login               #
+####################################
+@app.route('/login', methods=['POST', 'GET'])
+def login():
+
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        user = User.query.filter_by(email=email).first()
+            # TODO - Validate the user
+        if user and user.password == password:
+            # TODO - "REMEMBER" THAT THE USER HAS LOGGED IN
+            return redirect('/blog')
+        else: 
+            # TODO - explain why login failed
+            return '<h1>Error!</h1>'
+    return render_template('login.html')
+
+
+####################################
+#              Logout              #
+####################################
+#@app.route('/logout')
+#def logout():
+#    return render_template('blog.html')
+
+
+####################################
+#              Index               #
+####################################
+#@app.route('/index')
+#def index():
+#    return render_template('home.html')
+
+
+####################################
 #              Styles              #
 ####################################
 @app.route('/styles.css')
@@ -37,8 +114,8 @@ def styles():
 ####################################
 #           Post list              #
 ####################################
-@app.route('/', methods=['POST', 'GET'])
-def index():
+@app.route('/blog', methods=['POST', 'GET'])
+def blog_list():
 
     blogged = Blogs.query.filter_by(completed=False).all()
     deleted_blogs = Blogs.query.filter_by(completed=True).all()
@@ -119,8 +196,8 @@ def new_post_page():
         new_title = new_entry.blogtitle
         new_body = new_entry.blogtext
     return render_template('post.html', title="Blog Entry", new_title=new_title, new_body=new_body)
-    
-  
+
+
 
 if __name__ == '__main__':
     app.run()
