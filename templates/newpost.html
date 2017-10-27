@@ -6,11 +6,11 @@
     <div id='new-blog-field' class='container'>
             <h2>CREATE A BLOG</h2>
             <form action='/validate-blog' method='post'>
-                <label for='blogtitle' class='label'>TITLE:
+                <label for='blogtitle' class='label'>Title:
                     <input type='text' id='titlebox' name='blogtitle' value="{{ title_of_blog }}" />
                     <p class='error'>{{ title_error }}</p>
                 </label>
-                <label for='blogtext' class='label'>BODY:
+                <label for='blogtext' class='label'>Body:
                     <textarea id="blogtext" name="blogtext" value="{{ body_of_blog }}">{{ body_of_blog }}</textarea>
                     <p class='error'>{{ blog_error }}</p>
                 </label>

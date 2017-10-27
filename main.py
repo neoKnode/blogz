@@ -48,23 +48,44 @@ def register():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
-        verify = request.form['verify']
+        verify_password = request.form['verify']
 
-        # TODO - validate user's data
+    ########################
+    #  validate user data  #
+    ########################
+        password_error = ''
+        verify_error = ''
+        email_error = ''
+
+        if len(password) < 3 or len(password) > 120 or ' ' in password:
+            password_error = 'Password too short/long'
+
+        if verify_password == '':
+            verify_error = 'Please retype your password'
+
+        if password != verify_password:
+            verify_error = 'Passwords do not match!'
+        if email == '':
+            email_error = 'Please enter your email address'
+        if email != '':
+            if len(email) < 3 or len(email) > 120:
+                email_error = 'Email too short/long'
+            if email.count("@") != 1 or email.count(".") < 1:
+                email_error = 'Please enter a valid email'
+            if ("@" not in email) or ("." not in email) or (' ' in email):
+                email_error = 'Please enter a valid email'
+
 
         existing_user = User.query.filter_by(email=email).first()
-        if not existing_user:
+        if not existing_user and not email_error and not verify_error and not password_error:
             new_user = User(email, password)
             db.session.add(new_user)
             db.session.commit()
             # TODO - "Remember" the user 
             return redirect('/blog')
         else:
-            # TODO - user better response messaging
-            return '<h1>Duplicate users</h1>'
+            return render_template('signup.html', email=email, password_error=password_error, verify_error=verify_error, email_error=email_error)
     return render_template('signup.html')
-
-
 
 
 ####################################

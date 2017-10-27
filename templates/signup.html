@@ -1,31 +1,31 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Register to Get It Done!</h1>
+<div id='register' class='container'>
+    
+<h2 id='register_head'>REGISTER</h2>
 <form action="/register" method="post">
-    <table>
-        <tr>
-            <td><label for="email">Email</label></td>
-            <td>
-                <input name="email" type="email" value="{{ email }}">
-            </td>
-        </tr>
-        <tr>
-            <td><label for="password">Password</label></td>
-            <td>
-                <input name="password" type="password" value="{{ password }}">
-            </td>
-        </tr>
-        <tr>
-            <td><label for="verify">Verify Password</label></td>
-            <td>
-                <input name="verify" type="password" value="{{ verify }}">
-            </td>
-        </tr>
-    </table>
-    <input type="submit" value="Register">
+    <div class='registerfield'>
+        <label class='label' for="email">Email:</label>
+        <input id='titlebox' class='register_inputs' name="email" type="email" value="{{ email }}">
+        <p class='error'>{{ email_error }}</p>
+    </div>
+    <div class='registerfield'> 
+        <label class='label' for="password">Password:</label>
+        <input id='titlebox' class='register_inputs' name="password" type="password" value="{{ password }}">
+        <p class='error'>{{ password_error }}</p>
+    </div>
+    <div  class='registerfield'>
+        <label class='label' for="verify">Verify Password:</label>
+        <input id='titlebox' class='register_inputs' name="verify" type="password" value="{{ verify }}">
+        <p class='error'>{{ verify_error }}</p>
+    </div>
+
+    <input class='submit' type="submit" value="Register">
     
 </form>
+
+</div>
 {% endblock %}
 
 <!-------GIT TEST ----->

@@ -185,7 +185,6 @@ ul {
 }
 
 h2 {
-    letter-spacing: 10px;
     margin-top: 0px;
 }
 
@@ -217,4 +216,16 @@ h2 {
     font-family: Arial;
     font-size: 10px;
     word-wrap: break-word;
+}
+
+#registerfields {
+    text-align: center;
+}
+
+.register_inputs {
+    width: 100%;
+}
+
+#register_head {
+    text-align: center;
 }
