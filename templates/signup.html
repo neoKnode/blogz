@@ -5,15 +5,15 @@
     
 <h2 id='register_head'>REGISTER</h2>
 <form action="/register" method="post">
-    <div class='registerfield'>
-        <label class='label' for="email">Email:</label>
-        <input id='titlebox' class='register_inputs' name="email" type="email" value="{{ email }}">
-        <p class='error'>{{ email_error }}</p>
+    <div  class='registerfield'>
+        <label class='label' for="username">Username:</label>
+        <input id='titlebox' class='register_inputs' name="username" type="text" value="{{ username }}">
+        <p class='error'>{{ username_error }}</p>
     </div>
     <div class='registerfield'> 
         <label class='label' for="password">Password:</label>
         <input id='titlebox' class='register_inputs' name="password" type="password" value="{{ password }}">
-        <p class='error'>{{ password_error }}</p>
+        <p class='error'>{{ password_error }}</p>       
     </div>
     <div  class='registerfield'>
         <label class='label' for="verify">Verify Password:</label>
@@ -22,7 +22,7 @@
     </div>
 
     <input class='submit' type="submit" value="Register">
-    
+     
 </form>
 
 </div>

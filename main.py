@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, send_from_directory,flash
+from flask import Flask, request, render_template, redirect, send_from_directory, flash, session
 from flask_sqlalchemy import SQLAlchemy
 import os
 
@@ -7,7 +7,7 @@ app.config['DEBUG'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://blogz:blogz@localhost:8889/blogz'
 app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
-app.secret_key = 'y337kGcys&zP3B'
+app.secret_key = 'y337kGcys&zPQB'
 
 
 ####################################
@@ -16,8 +16,8 @@ app.secret_key = 'y337kGcys&zP3B'
 class Blogs(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
-    blogtitle = db.Column(db.String(30))
-    blogtext = db.Column(db.String(500))
+    blogtitle = db.Column(db.String(50))
+    blogtext = db.Column(db.String(1000))
     completed = db.Column(db.Boolean)
 
     def __init__(self, blogtitle, blogtext):
@@ -31,12 +31,49 @@ class Blogs(db.Model):
 ####################################
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(120), unique=True)
-    password = db.Column(db.String(120))
+    username = db.Column(db.String(30), unique=True)
+    password = db.Column(db.String(30))
 
-    def __init__(self, email, password):
-        self.email = email
+    def __init__(self, password, username):
         self.password = password
+        self.username = username
+
+
+@app.before_request
+def require_login():
+    allowed_routes = ['login', 'register']
+    if request.endpoint not in allowed_routes and 'username' not in session:
+        return redirect('login')
+
+
+####################################
+#              Login               #
+####################################
+@app.route('/login', methods=['POST', 'GET'])
+def login():
+    
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        password_error = ''
+        username_error = ''
+        existing_user = User.query.filter_by(username=username).first()
+        if not existing_user:
+            username_error = 'Username does not exist'
+        if username == '':
+            username_error = 'Please enter username'
+        if existing_user and existing_user.password != password:
+            password_error = 'Incorrect password'
+        if existing_user and existing_user.password == password:
+            session['username'] = username
+            return redirect('/newpost')
+        else:
+            return render_template('login.html', 
+                password_error=password_error, 
+                username_error=username_error,
+                username=username
+                )
+    return render_template('login.html')
 
 
 ####################################
@@ -46,17 +83,20 @@ class User(db.Model):
 def register():
 
     if request.method == 'POST':
-        email = request.form['email']
         password = request.form['password']
         verify_password = request.form['verify']
+        username = request.form['username']
 
     ########################
     #  validate user data  #
     ########################
         password_error = ''
         verify_error = ''
-        email_error = ''
+        username_error = ''
 
+        if len(username) < 3 or len(username) > 20 or ' ' in username:
+            username_error = 'Username too short/long'
+        
         if len(password) < 3 or len(password) > 120 or ' ' in password:
             password_error = 'Password too short/long'
 
@@ -65,55 +105,35 @@ def register():
 
         if password != verify_password:
             verify_error = 'Passwords do not match!'
-        if email == '':
-            email_error = 'Please enter your email address'
-        if email != '':
-            if len(email) < 3 or len(email) > 120:
-                email_error = 'Email too short/long'
-            if email.count("@") != 1 or email.count(".") < 1:
-                email_error = 'Please enter a valid email'
-            if ("@" not in email) or ("." not in email) or (' ' in email):
-                email_error = 'Please enter a valid email'
 
+        existing_user = User.query.filter_by(username=username).first()
 
-        existing_user = User.query.filter_by(email=email).first()
-        if not existing_user and not email_error and not verify_error and not password_error:
-            new_user = User(email, password)
+        if existing_user:
+            username_error = 'Username already exists'
+
+        if not existing_user and not username_error and not verify_error and not password_error:
+            new_user = User(password, username)
             db.session.add(new_user)
             db.session.commit()
-            # TODO - "Remember" the user 
-            return redirect('/blog')
+            session['username'] = username
+            return redirect('/newpost')
         else:
-            return render_template('signup.html', email=email, password_error=password_error, verify_error=verify_error, email_error=email_error)
+            return render_template('signup.html', 
+                password_error=password_error, 
+                verify_error=verify_error, 
+                username_error=username_error,
+                username=username
+                )
     return render_template('signup.html')
-
-
-####################################
-#              Login               #
-####################################
-@app.route('/login', methods=['POST', 'GET'])
-def login():
-
-    if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
-        user = User.query.filter_by(email=email).first()
-            # TODO - Validate the user
-        if user and user.password == password:
-            # TODO - "REMEMBER" THAT THE USER HAS LOGGED IN
-            return redirect('/blog')
-        else: 
-            # TODO - explain why login failed
-            return '<h1>Error!</h1>'
-    return render_template('login.html')
 
 
 ####################################
 #              Logout              #
 ####################################
-#@app.route('/logout')
-#def logout():
-#    return render_template('blog.html')
+@app.route('/logout')
+def logout():
+    del session['username']
+    return redirect('/blog')
 
 
 ####################################
@@ -141,8 +161,11 @@ def blog_list():
     blogged = Blogs.query.filter_by(completed=False).all()
     deleted_blogs = Blogs.query.filter_by(completed=True).all()
 
-    return render_template('blog.html', title='Build a Blog', 
-            blogged=blogged, deleted_blogs=deleted_blogs)
+    return render_template('blog.html', 
+        title='Build a Blog',
+        blogged=blogged, 
+        deleted_blogs=deleted_blogs
+        )
 
 
 ####################################
@@ -150,7 +173,7 @@ def blog_list():
 ####################################
 @app.route('/newpost', methods=['POST', 'GET'])
 def add_blog():
-
+    
     return render_template('newpost.html', title='Create Blog')
 
 
@@ -169,8 +192,11 @@ def delete_blog():
     blogged = Blogs.query.filter_by(completed=False).all()
     deleted_blogs = Blogs.query.filter_by(completed=True).all()
 
-    return render_template('blog.html', title='Build a Blog', 
-            blogged=blogged, deleted_blogs=deleted_blogs)
+    return render_template('blog.html', 
+        title='Build a Blog', 
+        blogged=blogged, 
+        deleted_blogs=deleted_blogs
+        )
     
 
 ####################################
@@ -200,9 +226,13 @@ def valid_blog():
         id = str(last_entry.id)
         return redirect('/page?id=' + id)
     else:
-        return render_template('/newpost.html', title='Create Blog', 
-            title_of_blog=title_of_blog, body_of_blog=body_of_blog, 
-            title_error=title_error, blog_error=blog_error)
+        return render_template('/newpost.html', 
+            title='Create Blog',
+            title_of_blog=title_of_blog, 
+            body_of_blog=body_of_blog, 
+            title_error=title_error, 
+            blog_error=blog_error
+            )
 
 
 ####################################
@@ -216,7 +246,11 @@ def new_post_page():
         new_entry = Blogs.query.filter_by(id=id).first()
         new_title = new_entry.blogtitle
         new_body = new_entry.blogtext
-    return render_template('post.html', title="Blog Entry", new_title=new_title, new_body=new_body)
+    return render_template('post.html', 
+        title="Blog Entry", 
+        new_title=new_title, 
+        new_body=new_body
+        )
 
 
 

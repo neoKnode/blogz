@@ -64,7 +64,7 @@ body {
     font-size: 100%;
     text-align: center;
     float: left;
-    width: 50%;
+    width: 20%;
     height: 100%;
 }
 
@@ -189,7 +189,8 @@ h2 {
 }
 
 #foot {
-    padding-bottom: 0;
+    padding-top: 25%;
+    padding-bottom: 0%;
     margin-bottom: 0;
 }
 
@@ -207,7 +208,7 @@ h2 {
     word-wrap: break-word;
     letter-spacing: 10px;
 }
-
+ 
 #new_body {
     padding: 0;
     font-weight: 300;
@@ -216,6 +217,7 @@ h2 {
     font-family: Arial;
     font-size: 10px;
     word-wrap: break-word;
+    text-align: left;
 }
 
 #registerfields {
@@ -228,4 +230,11 @@ h2 {
 
 #register_head {
     text-align: center;
+}
+
+p {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 100%;
+    text-align: center;
+
 }
