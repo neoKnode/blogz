@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% for blog in blogged %}
+<ul>
+<li id='blogtitles'><a href='/page?id={{blog.id}}'>{{blog.blogtitle}}</li></a>
+</form>
+<br>
+<li id='blogbody'>{{blog.blogtext}}</li>
+<li>
+    <form method='POST' action='/delete-blog' style='display:inline-block;'>
+        <input type='hidden' name='blog-id' value='{{blog.id}}' />
+        <input type='submit' id='Delete-button' value='Remove!' />                    
+    </form>
+</li>
+</ul>
+{% endfor %}
+
+{% endblock %}

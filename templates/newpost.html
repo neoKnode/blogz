@@ -5,7 +5,7 @@
 <!------------------CREATE A BLOG------------------>  
     <div id='new-blog-field' class='container'>
             <h2>CREATE A BLOG</h2>
-            <form action='/validate-blog' method='post'>
+            <form action='/newpost' method='post'>
                 <label for='blogtitle' class='label'>Title:
                     <input type='text' id='titlebox' name='blogtitle' value="{{ title_of_blog }}" />
                     <p class='error'>{{ title_error }}</p>

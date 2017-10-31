@@ -11,16 +11,14 @@
             <ul>
                 {% for blog in blogged %}
                 <li id='blogtitles'><a href='/page?id={{blog.id}}'>{{blog.blogtitle}}</li></a>
-                    <input type='hidden' name='blog-id' value='{{blog.id}}' />
                 </form>
                 <br>
-                <li id='blogbody'>{{blog.blogtext}}
-                    <br>
-                    <form method='POST' action='/delete-blog' style='display:inline-block;'>
-                        <input type='hidden' name='blog-id' value='{{blog.id}}' />
-                        <input type='submit' id='Delete-button' value='Remove!' />                    
-                    </form> 
+                <li id='blogbody'>{{blog.blogtext}}</li>
+                <li>
+                    <a href='/user?user={{blog.owner.id}}'>{{blog.owner.username}}</li>
                 </li>
+
+                
                 <br>
                 <br>
                 {% endfor %}
